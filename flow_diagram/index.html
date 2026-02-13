@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSCE 412 Load Balancer Flow Diagram</title>
+  <style>
+    :root{
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,0.06);
+      --panel-2: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.72);
+      --border: rgba(255,255,255,0.14);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius: 16px;
+      --maxw: 90vw;
+    }
+
+    * { box-sizing: border-box; }
+    body{
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(97, 164, 255, 0.22), transparent 60%),
+        radial-gradient(900px 500px at 80% 30%, rgba(165, 97, 255, 0.18), transparent 55%),
+        radial-gradient(800px 500px at 50% 85%, rgba(97, 255, 189, 0.10), transparent 60%),
+        var(--bg);
+      min-height: 100vh;
+    }
+
+    header{
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.15);
+      backdrop-filter: blur(8px);
+    }
+
+    .wrap{
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 18px 18px;
+    }
+
+    .brandbar{
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo{
+      width: 200px;
+      height: 200px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      flex: 0 0 auto;
+      box-shadow: var(--shadow);
+    }
+
+    .logo img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .titleblock{
+      display: flex;
+      flex-direction: column;
+      line-height: 1.20;
+    }
+
+    h1{
+      font-size: 2.5rem;
+      margin: 0;
+      font-weight: 750;
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle{
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 2.0rem;
+    }
+
+    main .wrap{
+      padding: 22px 18px 44px;
+    }
+
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card + .card{
+      margin-top: 18px;
+    }
+
+    .card-header{
+      padding: 14px 16px;
+      background: var(--panel-2);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card-header h2{
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .hint{
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .card-body{
+      padding: 16px;
+    }
+
+    .diagram{
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.15);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      min-height: 260px;
+    }
+
+    .diagram img{
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .placeholder{
+      padding: 28px 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .description{
+      color: var(--text);
+      line-height: 1.55;
+      font-size: 1.0rem;
+    }
+
+    .description p{
+      margin: 0 0 12px;
+    }
+
+    .description ul{
+      margin: 0 0 12px 20px;
+      padding: 0;
+      color: var(--text);
+    }
+
+    footer{
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 18px 0 0;
+      text-align: center;
+    }
+
+    @media (max-width: 560px){
+      .logo{ width: 44px; height: 44px; border-radius: 10px; }
+      h1{ font-size: 1.15rem; }
+      .subtitle{ font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="wrap">
+      <div class="brandbar">
+        <!-- Put your logo file in the same folder and name it "logo.png" (or change the src). -->
+        <div class="logo" aria-label="Logo">
+          <img src="FrostyLabs_Logo.png" alt="Logo" />
+        </div>
+
+        <div class="titleblock">
+          <h1>CSCE 412 Load Balancer Flow Diagram</h1>
+          <div class="subtitle">Design document page (UML/flow + description)</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+
+      <!-- Diagram card -->
+      <section class="card">
+        <div class="card-header">
+          <h2>Flow Diagram</h2>
+        </div>
+
+        <div class="card-body">
+          <div class="diagram">
+            <img
+              src="Flow chart- CSCE412.png"
+              alt="CSCE 412 Load Balancer Flow Diagram"
+              onerror="this.style.display='none'; this.parentElement.innerHTML = '<div class=&quot;placeholder&quot;><strong>Diagram placeholder</strong><br/>Add your file as <code>Flow chart- CSCE412.png</code> in this folder, or update the <code>src</code> in the HTML.</div>';"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Description card -->
+      <section class="card">
+        <div class="card-header">
+          <h2>Description</h2>
+        </div>
+
+        <div class="card-body">
+          <div class="description">
+            <p>
+              This page documents the workflow for my CSCE 412 Load Balancer simulation. First, the request is created with random IP_in, IP_out, job type (P/S), and processing time.
+              The request is then validated by the firewall before being sent to the load balancer. The load balancer queues the requests. When a server is available, the next 
+              request in the queue is dispatched to the server for processing. The server handler is responsible sending the request to an available server. Once the request has been processed, the server
+              is marked as available again. After a time interval, n, the system checks the queue length. If the queue length is above 80*servers, a new server is added. If the queue length is below 50*servers, a server is removed.
+            </p>
+
+            <p><strong>High-level workflow:</strong></p>
+            <ul>
+              <li><strong>Request generation:</strong> Random requests are created with IP_in, IP_out, job type (P/S), and processing time.</li>
+              <li><strong>Firewall validation:</strong> Requests from blocked IP ranges are dropped and logged. Requests that 
+                are approved are sent to the load balancer.</li>
+              <li><strong>Load Balancer:</strong> Valid requests are pushed into the load balancer queue.</li>
+              <li><strong>Dispatch:</strong> When a server is available, the next queued request is assigned to a server to be processed.</li>
+              <li><strong>Dynamic Server allocation:</strong> The system will scale up or down depending on the number of requests in the queue 
+                and the current server utilization. If the queue goes below 50*servers the system will scale down. If the queue goes above 80*servers, 
+                the system will scale up.</li>
+              <li><strong>Logging:</strong> Important actions (blocked requests, server add/remove, dispatch) are recorded for summary output.</li>
+            </ul>
+
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div>CSCE 412 — Load Balancer Project</div>
+      </footer>
+
+    </div>
+  </main>
+
+</body>
+</html>
