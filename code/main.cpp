@@ -25,9 +25,13 @@ int generate_random_time() {
 
 
 int main(){
-    int inital_request_count = 10;
-    int inital_server_count = 3;
+    int inital_server_count = 3; // should take user input
+    int total_simulation_time = 60; // should take user input
+    int inital_request_count = inital_server_count * 100;
     int clock = 0;
+    int check_server_count_buffer = 5;
+
+    // should request random number of requests per clock
     int requests_per_clock = 3;
 
     Firewall firewall;
@@ -50,7 +54,7 @@ int main(){
     }
 
     // Simulate processing requests
-    while (true){
+    while (clock < total_simulation_time) {
         // step 1: add new requests to the load balancer
         for (int i = 0; i < requests_per_clock; ++i){
             Request request(generate_random_ip(), generate_random_ip(), generate_random_time(), generate_random_request_type());
@@ -75,17 +79,19 @@ int main(){
             }   
         }
 
-        //step 4: check load balancer and scale up or down servers if needed
-        if (load_balancer.low_load() && server_handler.get_server_count() > 1){
-            // only scale down if there is a server that is not busy
-            Server* down_server = server_handler.get_available_server();
-            if (down_server) {
-                server_handler.scale_down(down_server);
-                std::cout << "Scaling down servers. Current server count: " << server_handler.get_server_count() << "." << std::endl;
-            }
-        }else if (load_balancer.high_load()){
-            server_handler.scale_up();
-            std::cout << "Scaling up servers. Current server count: " << server_handler.get_server_count() << "." << std::endl;
+        //step 4: check load balancer and scale up or down servers only every check_server_count_buffer clocks
+        if (clock % check_server_count_buffer == 0) {
+            if (load_balancer.low_load() && server_handler.get_server_count() > 1){
+                // only scale down if there is a server that is not busy
+                Server* down_server = server_handler.get_available_server();
+                if (down_server) {
+                    server_handler.scale_down(down_server);
+                    std::cout << "Scaling down servers. Current server count: " << server_handler.get_server_count() << "." << std::endl;
+                }
+            }else if (load_balancer.high_load()){
+                server_handler.scale_up();
+               
+             } std::cout << "Scaling up servers. Current server count: " << server_handler.get_server_count() << "." << std::endl;
         }
 
         // step 5: increment clock
