@@ -131,7 +131,7 @@ int main(){
         std::cout << "Clock: " << clock << std::endl;
         logFile << "Clock: " << clock << std::endl;
     }
-
+    logFile << std::endl << std::endl;
     logFile << "Simulation ended at clock " << clock << "." << std::endl;
     logFile << "Final server count: " << server_handler.get_server_count() << "." << std::endl;
     logFile << "Final load balancer queue size: " << load_balancer.get_queue_size() << "." << std::endl;
