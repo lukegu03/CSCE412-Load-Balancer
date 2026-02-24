@@ -1,2 +1,0 @@
-g++ -std=c++17 main.cpp server_handler.cpp server.cpp request.cpp firewall.cpp load_balancer.cpp -o out
-./out
