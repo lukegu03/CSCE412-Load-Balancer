@@ -105,7 +105,7 @@ int main(){
 
         //step 4: check load balancer and scale up or down servers only every check_server_count_buffer clocks
         if (clock % check_server_count_buffer == 0) {
-            if (load_balancer.low_load() && server_handler.get_server_count() > 1){
+            if (load_balancer.low_load(server_handler.get_server_count()) && server_handler.get_server_count() > 1){
                 // only scale down if there is a server that is not busy
                 Server* down_server = server_handler.get_available_server();
                 if (down_server) {
@@ -113,7 +113,7 @@ int main(){
                     total_servers_removed++;
                     std::cout << "Scaling down servers. Current server count: " << server_handler.get_server_count() << "." << std::endl;
                 }
-            }else if (load_balancer.high_load()){
+            }else if (load_balancer.high_load(server_handler.get_server_count())){
                 server_handler.scale_up();
                 total_servers_created++;
                 std::cout << "Scaling up servers. Current server count: " << server_handler.get_server_count() << "." << std::endl;
