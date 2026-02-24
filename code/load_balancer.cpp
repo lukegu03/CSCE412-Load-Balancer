@@ -18,12 +18,12 @@ bool LoadBalancer::is_empty() const {
     return requestQueue.empty();
 }
 
-bool LoadBalancer::low_load() const {
-    return requestQueue.size() < 50;
+bool LoadBalancer::low_load(int server_count) const {
+    return requestQueue.size() < 50*server_count;
 }
 
-bool LoadBalancer::high_load() const {
-    return requestQueue.size() > 80;
+bool LoadBalancer::high_load(int server_count) const {
+    return requestQueue.size() > 80*server_count;
 }
 
 
