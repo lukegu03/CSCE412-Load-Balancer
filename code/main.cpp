@@ -25,7 +25,6 @@ int generate_random_time() {
 }
 
 
-
 int main(){
     std::ofstream logFile("log.txt");
 
@@ -99,10 +98,8 @@ int main(){
             Server* server = server_handler.assign_request(request);
             if (server) {
                 std::cout << "Assigned request from " << request.get_ip_in() << " sent to server " << server->get_server_id() << "." << std::endl;
-                logFile << "Assigned request from " << request.get_ip_in() << " sent to server " << server->get_server_id() << "." << std::endl;
             } else {
                 std::cout << "No available servers to handle the request from " << request.get_ip_in() << "." << std::endl;
-                logFile << "No available servers to handle the request from " << request.get_ip_in() << "." << std::endl;
             }   
         }
 
@@ -115,13 +112,11 @@ int main(){
                     server_handler.scale_down(down_server);
                     total_servers_removed++;
                     std::cout << "Scaling down servers. Current server count: " << server_handler.get_server_count() << "." << std::endl;
-                    logFile << "Scaling down servers. Current server count: " << server_handler.get_server_count() << "." << std::endl;
                 }
             }else if (load_balancer.high_load()){
                 server_handler.scale_up();
                 total_servers_created++;
                 std::cout << "Scaling up servers. Current server count: " << server_handler.get_server_count() << "." << std::endl;
-                logFile << "Scaling up servers. Current server count: " << server_handler.get_server_count() << "." << std::endl;
              } 
         }
 
@@ -129,13 +124,21 @@ int main(){
         clock++;
         time_to_add_requests--;
         std::cout << "Clock: " << clock << std::endl;
-        logFile << "Clock: " << clock << std::endl;
+        if (clock % 25 == 0) {
+            logFile << std::endl;
+            logFile << "Clock: " << clock << std::endl;
+            logFile << "Current server count: " << server_handler.get_server_count() << "." << std::endl;
+            logFile << "Current load balancer queue size: " << load_balancer.get_queue_size() << "." << std::endl;
+            logFile << "Requests processed (or currentlty processing) so far: " << total_request_generated - load_balancer.get_queue_size() << "." << std::endl;
+        }
     }
+
     logFile << std::endl << std::endl;
     logFile << "Simulation ended at clock " << clock << "." << std::endl;
     logFile << "Final server count: " << server_handler.get_server_count() << "." << std::endl;
     logFile << "Final load balancer queue size: " << load_balancer.get_queue_size() << "." << std::endl;
     logFile << "Total requests generated: " << total_request_generated << "." << std::endl;
+    logFile << "Total requests processed (or currently processing): " << total_request_generated - load_balancer.get_queue_size() << "." << std::endl;
     logFile << "Total servers created: " << total_servers_created << "." << std::endl;
     logFile << "Total servers removed: " << total_servers_removed << "." << std::endl;
     logFile.close();

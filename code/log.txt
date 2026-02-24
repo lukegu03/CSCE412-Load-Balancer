@@ -1,0 +1,212 @@
+Firewall initialized
+Load balancer initialized
+Server handler initialized
+
+Clock: 25
+Current server count: 15.
+Current load balancer queue size: 979.
+Requests processed (or currentlty processing) so far: 58.
+
+Clock: 50
+Current server count: 20.
+Current load balancer queue size: 917.
+Requests processed (or currentlty processing) so far: 141.
+
+Clock: 75
+Current server count: 25.
+Current load balancer queue size: 826.
+Requests processed (or currentlty processing) so far: 247.
+
+Clock: 100
+Current server count: 30.
+Current load balancer queue size: 726.
+Requests processed (or currentlty processing) so far: 372.
+
+Clock: 125
+Current server count: 35.
+Current load balancer queue size: 606.
+Requests processed (or currentlty processing) so far: 511.
+
+Clock: 150
+Current server count: 40.
+Current load balancer queue size: 448.
+Requests processed (or currentlty processing) so far: 690.
+
+Clock: 175
+Current server count: 45.
+Current load balancer queue size: 273.
+Requests processed (or currentlty processing) so far: 883.
+
+Clock: 200
+Current server count: 50.
+Current load balancer queue size: 67.
+Requests processed (or currentlty processing) so far: 1111.
+
+Clock: 225
+Current server count: 47.
+Current load balancer queue size: 0.
+Requests processed (or currentlty processing) so far: 1207.
+
+Clock: 250
+Current server count: 42.
+Current load balancer queue size: 0.
+Requests processed (or currentlty processing) so far: 1222.
+
+Clock: 275
+Current server count: 37.
+Current load balancer queue size: 0.
+Requests processed (or currentlty processing) so far: 1239.
+
+Clock: 300
+Current server count: 32.
+Current load balancer queue size: 0.
+Requests processed (or currentlty processing) so far: 1271.
+
+Clock: 325
+Current server count: 27.
+Current load balancer queue size: 0.
+Requests processed (or currentlty processing) so far: 1300.
+
+Clock: 350
+Current server count: 22.
+Current load balancer queue size: 0.
+Requests processed (or currentlty processing) so far: 1308.
+
+Clock: 375
+Current server count: 17.
+Current load balancer queue size: 3.
+Requests processed (or currentlty processing) so far: 1350.
+
+Clock: 400
+Current server count: 13.
+Current load balancer queue size: 0.
+Requests processed (or currentlty processing) so far: 1375.
+
+Clock: 425
+Current server count: 8.
+Current load balancer queue size: 0.
+Requests processed (or currentlty processing) so far: 1381.
+
+Clock: 450
+Current server count: 6.
+Current load balancer queue size: 0.
+Requests processed (or currentlty processing) so far: 1404.
+
+Clock: 475
+Current server count: 5.
+Current load balancer queue size: 24.
+Requests processed (or currentlty processing) so far: 1430.
+
+Clock: 500
+Current server count: 5.
+Current load balancer queue size: 29.
+Requests processed (or currentlty processing) so far: 1451.
+
+Clock: 525
+Current server count: 5.
+Current load balancer queue size: 30.
+Requests processed (or currentlty processing) so far: 1476.
+
+Clock: 550
+Current server count: 5.
+Current load balancer queue size: 33.
+Requests processed (or currentlty processing) so far: 1497.
+
+Clock: 575
+Current server count: 5.
+Current load balancer queue size: 34.
+Requests processed (or currentlty processing) so far: 1522.
+
+Clock: 600
+Current server count: 5.
+Current load balancer queue size: 44.
+Requests processed (or currentlty processing) so far: 1545.
+
+Clock: 625
+Current server count: 5.
+Current load balancer queue size: 60.
+Requests processed (or currentlty processing) so far: 1570.
+
+Clock: 650
+Current server count: 5.
+Current load balancer queue size: 49.
+Requests processed (or currentlty processing) so far: 1590.
+
+Clock: 675
+Current server count: 5.
+Current load balancer queue size: 40.
+Requests processed (or currentlty processing) so far: 1613.
+
+Clock: 700
+Current server count: 5.
+Current load balancer queue size: 38.
+Requests processed (or currentlty processing) so far: 1637.
+
+Clock: 725
+Current server count: 5.
+Current load balancer queue size: 33.
+Requests processed (or currentlty processing) so far: 1661.
+
+Clock: 750
+Current server count: 5.
+Current load balancer queue size: 50.
+Requests processed (or currentlty processing) so far: 1681.
+
+Clock: 775
+Current server count: 5.
+Current load balancer queue size: 56.
+Requests processed (or currentlty processing) so far: 1703.
+
+Clock: 800
+Current server count: 5.
+Current load balancer queue size: 54.
+Requests processed (or currentlty processing) so far: 1725.
+
+Clock: 825
+Current server count: 5.
+Current load balancer queue size: 54.
+Requests processed (or currentlty processing) so far: 1751.
+
+Clock: 850
+Current server count: 5.
+Current load balancer queue size: 56.
+Requests processed (or currentlty processing) so far: 1773.
+
+Clock: 875
+Current server count: 5.
+Current load balancer queue size: 75.
+Requests processed (or currentlty processing) so far: 1796.
+
+Clock: 900
+Current server count: 6.
+Current load balancer queue size: 76.
+Requests processed (or currentlty processing) so far: 1820.
+
+Clock: 925
+Current server count: 6.
+Current load balancer queue size: 68.
+Requests processed (or currentlty processing) so far: 1854.
+
+Clock: 950
+Current server count: 6.
+Current load balancer queue size: 69.
+Requests processed (or currentlty processing) so far: 1882.
+
+Clock: 975
+Current server count: 6.
+Current load balancer queue size: 60.
+Requests processed (or currentlty processing) so far: 1915.
+
+Clock: 1000
+Current server count: 6.
+Current load balancer queue size: 55.
+Requests processed (or currentlty processing) so far: 1942.
+
+
+Simulation ended at clock 1000.
+Final server count: 6.
+Final load balancer queue size: 55.
+Total requests generated: 1997.
+Total requests processed (or currently processing): 1942.
+Total servers created: 51.
+Total servers removed: 45.
