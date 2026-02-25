@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <unistd.h>
+#include <ctime>
 #include <fstream>
 
 // color codes
@@ -37,6 +38,7 @@ int generate_random_request_count(){
 
 
 int main(){
+    std::srand(static_cast<unsigned>(std::time(nullptr))); // seed random number generator
     std::ofstream logFile("log.txt");
 
     int initial_streaming_server_count = 0;
@@ -72,6 +74,18 @@ int main(){
     logFile  << "Streaming server handler initialized" << std::endl;
     ServerHandler processing_server_handler;
     logFile << "Processing server handler initialized" << std::endl;
+
+    std::string block_choice;
+    std:: cout << "Would you like to block any IP ranges in the firewall before starting the simulation? (yes/no): ";
+    std::cin >> block_choice;
+
+    if (block_choice == "yes") {
+        std::cout << "Enter IP range to block in the format start_ip end_ip (e.g. 192.168.1.1 192.168.1.255): ";
+        std::string start_ip, end_ip;
+        std::cin >> start_ip >> end_ip;
+        firewall.blockRange(start_ip, end_ip);
+    }
+   
 
     // initialize servers
     for (int i = 0; i < initial_streaming_server_count; ++i) {
