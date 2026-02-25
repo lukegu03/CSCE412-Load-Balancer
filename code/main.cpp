@@ -1,3 +1,13 @@
+/**
+ * @file main.cpp
+ * @brief Runs a load balancer simulation with streaming and processing servers.
+ *
+ * This program simulates a system that generates random requests over time,
+ * optionally filters them through a firewall, queues them into one of two load
+ * balancers (streaming vs processing), and assigns them to available servers.
+ * The system dynamically scales the number of servers based on queue load.
+ */
+
 #include <iostream>
 #include "server_handler.h"
 #include "request.h"
@@ -16,6 +26,13 @@
 #define BLUE    "\033[34m"
 #define RESET   "\033[0m"
 
+/**
+ * @brief Generates a random IPv4 address string.
+ *
+ * The generated IP is in dotted-quad form with each octet in [0, 255].
+ *
+ * @return Random IPv4 address (e.g., "192.168.1.25").
+ */
 std::string generate_random_ip() {
     return std::to_string(rand() % 256) + "." +
            std::to_string(rand() % 256) + "." +
@@ -23,20 +40,48 @@ std::string generate_random_ip() {
            std::to_string(rand() % 256);
 }
 
+/**
+ * @brief Generates a random request type.
+ *
+ * The request type is chosen from a fixed set:
+ * - 'P' for processing
+ * - 'S' for streaming
+ *
+ * @return A character representing the request type.
+ */
 char generate_random_request_type() {
     const char types[] = {'P', 'S'};
     return types[rand() % 2];
 }
 
+/**
+ * @brief Generates a random processing time for a request.
+ *
+ * @return Random time-to-process value in the range [1, 10].
+ */
 int generate_random_time() {
     return rand() % 10 + 1;
 }
 
+/**
+ * @brief Generates a random number of requests to add per clock interval.
+ *
+ * @return Random request count in the range [1, 20].
+ */
 int generate_random_request_count(){
     return rand() % 20 + 1;
 }
 
-
+/**
+ * @brief Entry point for the load balancer simulation.
+ *
+ * Prompts the user for initial server counts and total simulation time,
+ * optionally configures firewall blocked IP ranges, generates and processes
+ * requests over time, scales servers based on load thresholds, and logs
+ * periodic simulation statistics to a file.
+ *
+ * @return 0 on normal program termination.
+ */
 int main(){
     std::srand(static_cast<unsigned>(std::time(nullptr))); // seed random number generator
     std::ofstream logFile("log.txt");
