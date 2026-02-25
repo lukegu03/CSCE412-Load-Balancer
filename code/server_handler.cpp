@@ -2,6 +2,10 @@
 #include "server.h"
 #include <iostream>
 
+#define ORANGE  "\033[38;5;208m"
+#define RESET   "\033[0m"
+
+
 ServerHandler::ServerHandler() {} // start with no servers
 
 void ServerHandler::add_server() {
@@ -50,7 +54,7 @@ int ServerHandler::get_server_count() const {
 void ServerHandler::update_servers() {
     for (auto& server : servers) {
         if (server->is_available() == false) {
-            std::cout << "Server " << server->get_server_id() << " is busy with request " << server->get_active_request_id() << " until time " << server->get_busy_until_time() << "." << std::endl;
+            std::cout << ORANGE << "Server " << server->get_server_id() << " is busy with request " << server->get_active_request_id() << " until time " << server->get_busy_until_time() << "." << RESET << std::endl;
             server->update_busy_time();
         }
     }

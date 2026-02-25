@@ -8,6 +8,13 @@
 #include <unistd.h>
 #include <fstream>
 
+// color codes
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define RESET   "\033[0m"
+
 std::string generate_random_ip() {
     return std::to_string(rand() % 256) + "." +
            std::to_string(rand() % 256) + "." +
@@ -22,6 +29,10 @@ char generate_random_request_type() {
 
 int generate_random_time() {
     return rand() % 10 + 1;
+}
+
+int generate_random_request_count(){
+    return rand() % 20 + 1;
 }
 
 
@@ -49,7 +60,7 @@ int main(){
     int check_server_count_buffer = 5;
     int time_to_add_requests = generate_random_time();
 
-    int requests_per_clock = generate_random_time();
+    int requests_per_clock = generate_random_request_count();
 
     Firewall firewall;
     logFile << "Firewall initialized" << std::endl;
@@ -80,7 +91,7 @@ int main(){
                 streaming_load_balancer.queue_request(request);
             }
         }else{
-            std::cout << "Request from " << request.get_ip_in() << " is blocked by the firewall." << std::endl;
+            std::cout << YELLOW <<  "Request from " << request.get_ip_in() << " is blocked by the firewall." << RESET << std::endl;
             logFile << "Request from " << request.get_ip_in() << " is blocked by the firewall." << std::endl;
         }
     }
@@ -99,12 +110,12 @@ int main(){
                     }
                     total_request_generated++;
                 }else{
-                    std::cout << "Request from " << request.get_ip_in() << " is blocked by the firewall." << std::endl;
+                    std::cout << YELLOW <<  "Request from " << request.get_ip_in() << " is blocked by the firewall." << RESET << std::endl;
                     logFile << "Request from " << request.get_ip_in() << " is blocked by the firewall." << std::endl;
                 }
             }
             time_to_add_requests = generate_random_time();
-            requests_per_clock = generate_random_time();
+            requests_per_clock = generate_random_request_count();
         }
 
 
@@ -118,18 +129,18 @@ int main(){
             Request request = streaming_load_balancer.process_request();
             Server* server = streaming_server_handler.assign_request(request);
             if (server) {
-                std::cout << "Assigned request from " << request.get_ip_in() << " sent to streaming server " << server->get_server_id() << "." << std::endl;
+                std::cout << BLUE << "Assigned request from " << request.get_ip_in() << " sent to streaming server " << server->get_server_id() << "." << RESET << std::endl;
             } else {
-                std::cout << "No available servers to handle the request from " << request.get_ip_in() << "." << std::endl;
+                std::cout << YELLOW << "No available servers to handle the request from " << request.get_ip_in() << "." << RESET << std::endl;
             }   
         }
         while (!processing_load_balancer.is_empty() && processing_server_handler.get_available_server() != nullptr){
             Request request = processing_load_balancer.process_request();
             Server* server = processing_server_handler.assign_request(request);
             if (server) {
-                std::cout << "Assigned request from " << request.get_ip_in() << " sent to processing server " << server->get_server_id() << "." << std::endl;
+                std::cout << BLUE << "Assigned request from " << request.get_ip_in() << " sent to processing server " << server->get_server_id() << "." << RESET << std::endl;
             } else {
-                std::cout << "No available servers to handle the request from " << request.get_ip_in() << "." << std::endl;
+                std::cout << YELLOW << "No available servers to handle the request from " << request.get_ip_in() << "." << RESET << std::endl;
             }   
         }
 
@@ -141,12 +152,12 @@ int main(){
                 if (down_server) {
                     streaming_server_handler.scale_down(down_server);
                     total_servers_removed++;
-                    std::cout << "Scaling down streaming servers. Current server count: " << streaming_server_handler.get_server_count() << "." << std::endl;
+                    std::cout << RED << "Scaling down streaming servers. Current server count: " << streaming_server_handler.get_server_count() << "." << RESET << std::endl;
                 }
             }else if (streaming_load_balancer.high_load(streaming_server_handler.get_server_count())){
                 streaming_server_handler.scale_up();
                 total_servers_created++;
-                std::cout << "Scaling up streaming servers. Current server count: " << streaming_server_handler.get_server_count() << "." << std::endl;
+                std::cout << GREEN << "Scaling up streaming servers. Current server count: " << streaming_server_handler.get_server_count() << "." << RESET << std::endl;
              } 
 
              if(processing_load_balancer.low_load(processing_server_handler.get_server_count()) && processing_server_handler.get_server_count() > 1){
@@ -155,19 +166,19 @@ int main(){
                 if (down_server) {
                     processing_server_handler.scale_down(down_server);
                     total_servers_removed++;
-                    std::cout << "Scaling down processing servers. Current server count: " << processing_server_handler.get_server_count() << "." << std::endl;
+                    std::cout << RED << "Scaling down processing servers. Current server count: " << processing_server_handler.get_server_count() << "." << RESET << std::endl;
                 }
             }else if (processing_load_balancer.high_load(processing_server_handler.get_server_count())){
                 processing_server_handler.scale_up();
                 total_servers_created++;
-                std::cout << "Scaling up processing servers. Current server count: " << processing_server_handler.get_server_count() << "." << std::endl;
+                std::cout << GREEN << "Scaling up processing servers. Current server count: " << processing_server_handler.get_server_count() << "." << RESET << std::endl;
              }
         }
 
         // step 5: increment clock
         clock++;
         time_to_add_requests--;
-        std::cout << "Clock: " << clock << std::endl;
+        std::cout << BLUE << "Clock: " << clock << RESET << std::endl;
         if (clock % 25 == 0) {
             logFile << std::endl;
             logFile << "Clock: " << clock << std::endl;
