@@ -132,6 +132,7 @@ int main(){
         std::cout << "Enter IP range to block in the format start_ip end_ip (e.g. 192.168.1.1 192.168.1.255): ";
         std::string start_ip, end_ip;
         std::cin >> start_ip >> end_ip;
+        logFile << "Blocking IP range: " << start_ip << " - " << end_ip << "." << std::endl;
         firewall.blockRange(start_ip, end_ip);
     }
    
