@@ -1,0 +1,17 @@
+digraph "load_balancer.h"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  Node1 [id="Node000001",label="load_balancer.h",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Declares the LoadBalancer class for managing incoming requests."];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="load_balancer.cpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$load__balancer_8cpp.html",tooltip="Implements the LoadBalancer class for managing queued requests."];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="main.cpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$main_8cpp.html",tooltip="Runs a load balancer simulation with streaming and processing servers."];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="server_handler.h",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$server__handler_8h.html",tooltip="Declares the ServerHandler class responsible for managing servers."];
+  Node4 -> Node3 [id="edge4_Node000004_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 -> Node5 [id="edge5_Node000004_Node000005",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="server_handler.cpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$server__handler_8cpp.html",tooltip="Implements the ServerHandler class for managing server instances."];
+}

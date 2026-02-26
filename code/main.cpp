@@ -89,15 +89,19 @@ int main(){
     int initial_streaming_server_count = 0;
     std::cout << "Enter an initial streaming server count: ";
     std::cin >> initial_streaming_server_count;
+    logFile << "Initial streaming server count: " << initial_streaming_server_count << "." << std::endl;
 
     int initial_processing_server_count = 0;
     std::cout << "Enter an initial processing server count: ";
     std::cin >> initial_processing_server_count;
+    logFile << "Initial processing server count: " << initial_processing_server_count << "." << std::endl;
 
     int total_simulation_time = 0;
     std::cout << "Enter total simulation time (clock cycles): ";
     std::cin >> total_simulation_time;
+    logFile << "Total simulation time: " << total_simulation_time << " clock cycles." << std::endl;
     int initial_request_count = (initial_streaming_server_count + initial_processing_server_count) * 100;
+    logFile << "Initial request count: " << initial_request_count << "." << std::endl;
 
     int total_request_generated = initial_request_count;
     int total_servers_created = initial_streaming_server_count + initial_processing_server_count;
