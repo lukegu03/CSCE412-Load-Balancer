@@ -69,7 +69,7 @@ int generate_random_time() {
  * @return Random request count in the range [1, 20].
  */
 int generate_random_request_count(){
-    return rand() % 20 + 1;
+    return rand() % 35 + 25;
 }
 
 /**
@@ -252,7 +252,7 @@ int main(){
             logFile << "Current processing server count: " << processing_server_handler.get_server_count() << "." << std::endl;
             logFile << "Current processing load balancer queue size: " << processing_load_balancer.get_queue_size() << "." << std::endl;
 
-            logFile << "Requests processed (or currentlty processing) so far: " << total_request_generated - streaming_load_balancer.get_queue_size() - processing_load_balancer.get_queue_size() << "." << std::endl;
+            logFile << "Requests processed (or currently processing) so far: " << total_request_generated - streaming_load_balancer.get_queue_size() - processing_load_balancer.get_queue_size() << "." << std::endl;
         }
     }
 
