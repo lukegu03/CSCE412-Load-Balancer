@@ -60,7 +60,7 @@ char generate_random_request_type() {
  * @return Random time-to-process value in the range [1, 10].
  */
 int generate_random_time() {
-    return rand() % 10 + 1;
+    return rand() % 12 + 1;
 }
 
 /**
@@ -69,7 +69,7 @@ int generate_random_time() {
  * @return Random request count in the range [1, 20].
  */
 int generate_random_request_count(){
-    return rand() % 35 + 25;
+    return rand() % 40 + 20;
 }
 
 /**
@@ -101,17 +101,20 @@ int main(){
     std::cin >> total_simulation_time;
     logFile << "Total simulation time: " << total_simulation_time << " clock cycles." << std::endl;
     int initial_request_count = (initial_streaming_server_count + initial_processing_server_count) * 100;
-    logFile << "Initial request count: " << initial_request_count << "." << std::endl;
+    logFile << "Initial request queue size: " << initial_request_count << "." << std::endl;
 
     int total_request_generated = initial_request_count;
     int total_servers_created = initial_streaming_server_count + initial_processing_server_count;
     int total_servers_removed = 0;
 
     int clock = 0;
-    int check_server_count_buffer = 5;
+    int check_server_count_buffer = 3; // only check load balancer and scale up/down servers every 3 clock cycles
     int time_to_add_requests = generate_random_time();
 
     int requests_per_clock = generate_random_request_count();
+
+    int blocked_requests = 0;
+
 
     Firewall firewall;
     logFile << "Firewall initialized" << std::endl;
@@ -135,6 +138,9 @@ int main(){
         logFile << "Blocking IP range: " << start_ip << " - " << end_ip << "." << std::endl;
         firewall.blockRange(start_ip, end_ip);
     }
+
+    logFile << "requests take random time to process between 1 and 13 clock cycles" << std::endl;
+    logFile << "Starting simulation..." << std::endl;
    
 
     // initialize servers
@@ -157,6 +163,7 @@ int main(){
         }else{
             std::cout << YELLOW <<  "Request from " << request.get_ip_in() << " is blocked by the firewall." << RESET << std::endl;
             logFile << "Request from " << request.get_ip_in() << " is blocked by the firewall." << std::endl;
+            blocked_requests++;
         }
     }
 
@@ -176,6 +183,7 @@ int main(){
                 }else{
                     std::cout << YELLOW <<  "Request from " << request.get_ip_in() << " is blocked by the firewall." << RESET << std::endl;
                     logFile << "Request from " << request.get_ip_in() << " is blocked by the firewall." << std::endl;
+                    blocked_requests++;
                 }
             }
             time_to_add_requests = generate_random_time();
@@ -204,7 +212,7 @@ int main(){
             if (server) {
                 std::cout << BLUE << "Assigned request from " << request.get_ip_in() << " sent to processing server " << server->get_server_id() << "." << RESET << std::endl;
             } else {
-                std::cout << YELLOW << "No available servers to handle the request from " << request.get_ip_in() << "." << RESET << std::endl;
+                std::cout << YELLOW << "No available servers to handle the request from " << request.get_ip_in() <<  RESET << std::endl;
             }   
         }
 
@@ -243,7 +251,7 @@ int main(){
         clock++;
         time_to_add_requests--;
         std::cout << BLUE << "Clock: " << clock << RESET << std::endl;
-        if (clock % 25 == 0) {
+        if (clock % 50 == 0) {
             logFile << std::endl;
             logFile << "Clock: " << clock << std::endl;
             logFile << "Current streaming server count: " << streaming_server_handler.get_server_count() << "." << std::endl;
@@ -258,16 +266,18 @@ int main(){
 
     logFile << std::endl << std::endl;
     logFile << "Simulation ended at clock " << clock << "." << std::endl;
-    logFile << "Final streaming server count: " << streaming_server_handler.get_server_count() << "." << std::endl;
-    logFile << "Final streaming load balancer queue size: " << streaming_load_balancer.get_queue_size() << "." << std::endl;
+    logFile << "Final streaming server count: " << streaming_server_handler.get_server_count() << std::endl;
+    logFile << "Final processing server count: " << processing_server_handler.get_server_count() << std::endl;
 
-    logFile << "Final processing server count: " << processing_server_handler.get_server_count() << "." << std::endl;
-    logFile << "Final processing load balancer queue size: " << processing_load_balancer.get_queue_size() << "." << std::endl;
+    logFile << "Total request queue size at the end of simulation: " << streaming_load_balancer.get_queue_size() + processing_load_balancer.get_queue_size() << std::endl;
+    logFile << "Final streaming load balancer queue size: " << streaming_load_balancer.get_queue_size() << std::endl;
+    logFile << "Final processing load balancer queue size: " << processing_load_balancer.get_queue_size() << std::endl;
 
-    logFile << "Total requests generated: " << total_request_generated << "." << std::endl;
-    logFile << "Total requests processed (or currently processing): " << total_request_generated - streaming_load_balancer.get_queue_size() - processing_load_balancer.get_queue_size() << "." << std::endl;
+    logFile << "Total requests generated: " << total_request_generated << std::endl;
+    logFile << "Total requests processed (or currently processing): " << total_request_generated - streaming_load_balancer.get_queue_size() - processing_load_balancer.get_queue_size() << std::endl;
     
-    logFile << "Total servers created: " << total_servers_created << "." << std::endl;
-    logFile << "Total servers removed: " << total_servers_removed << "." << std::endl;
+    logFile << "Total servers created: " << total_servers_created << std::endl;
+    logFile << "Total servers removed: " << total_servers_removed << std::endl;
+    logFile << "Total requests blocked by firewall: " << blocked_requests << std::endl;
     logFile.close();
 }
